@@ -1,0 +1,32 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+    height: 80vh;
+    min-height: 500px;
+    padding: 10px;
+}
+
+#calculator {
+    border: 2px solid black;
+    width: 500px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+.screen {
+    border: 1px solid red;
+    flex: auto;
+    margin: 10px;
+    max-height: 20%;
+}
+
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-auto-rows: 100%;
+    margin: 10px;
+}
