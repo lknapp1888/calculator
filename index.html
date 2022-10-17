@@ -12,30 +12,31 @@
         <main class="main">
             <div id="calculator">
                 <div class="screen">
-                    <div class="subscreen sum-container">0</div>
-                    <div class="subscreen input-container">0</div>
+                    <div class="subscreen" id="calculation-screen"></div>
+                    <div class="subscreen" id="display-value"></div>
                 </div>
                 <div class="button-grid">
-                    <button class="btn num">7</button>
-                    <button class="btn num">8</button>
-                    <button class="btn num">9</button>
-                    <button class="btn operator">/</button>
-                    <button class="btn num">4</button>
-                    <button class="btn num">5</button>
-                    <button class="btn num">6</button>
-                    <button class="btn operator">x</button>
-                    <button class="btn num">1</button>
-                    <button class="btn num">2</button>
-                    <button class="btn num">3</button>
-                    <button class="btn operator">-</button>
-                    <button class="btn num">0</button>
+                    <button class="btn num-btn num-seven" value=7>7</button>
+                    <button class="btn num-btn num-eight" value=8>8</button>
+                    <button class="btn num-btn num-nine" value=9>9</button>
+                    <button class="btn operator-btn" value="/">/</button>
+                    <button class="btn num-btn num-four" value=4>4</button>
+                    <button class="btn num-btn num-five" value=5>5</button>
+                    <button class="btn num-btn num-six" value=6>6</button>
+                    <button class="btn operator-btn" value="x">x</button>
+                    <button class="btn num-btn num-one" value=1>1</button>
+                    <button class="btn num-btn num-two" value=2>2</button>
+                    <button class="btn num-btn num-three" value=3>3</button>
+                    <button class="btn operator-btn">-</button>
+                    <button class="btn num-btn num-zero" value=0>0</button>
                     <button class="btn float">.</button>
-                    <button class="btn operator">=</button>
-                    <button class="btn operator">+</button>
+                    <button class="btn operator-btn" value="=">=</button>
+                    <button class="btn operator-btn" value="+">+</button>
                     <button class="btn clear-btn">clear</button>
                     <button class="btn delete-btn">delete</button>
                 </div>
             </div>
         </main>
+        <script src="calculatorScript.js" async defer></script>
     </body>
 </html>
