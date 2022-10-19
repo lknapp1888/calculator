@@ -24,13 +24,13 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
       }
       if ((e.target.value === '+') || (e.target.value === '-') || 
       (e.target.value === 'x') || (e.target.value === '/')) {
-        if (Number.isInteger(firstVal)) {
+        if ((typeof firstVal) === 'number') {
           liveOperator = e.target.value;
           ticker = 2;
           CALC_SCREEN.innerText = firstVal + liveOperator;
           return;
         }
-        if (!Number.isInteger(firstVal)) {
+        if ((typeof firstVal) !== 'number')  {
           if (startingVal !== '') {
             liveOperator = e.target.value;
             firstVal = startingVal;
@@ -40,7 +40,6 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
             return;
           }
           else return;
-
         }
       }
     }
@@ -70,11 +69,14 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
         }
         if (parseInt(secondVal) !== NaN) {
           if (liveOperator !== e.target.value) {
-            liveOperator = e.target.value;
-            CALC_SCREEN.innerText = firstVal + liveOperator;
-            DISPLAY_SCREEN.innerText = firstVal;
-            secondVal = '';
-            return;
+            if (typeof secondVal === 'number') {
+              liveOperator = e.target.value;
+              CALC_SCREEN.innerText = firstVal + liveOperator;
+              DISPLAY_SCREEN.innerText = firstVal;
+              secondVal = '';
+              return;
+            }
+            else return;
           }
           else {
           liveOperator = e.target.value;
@@ -89,7 +91,7 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
       }
       if (e.target.value === '=') {
         if (secondVal !== '') {
-        firstVal = operate(parseInt(firstVal), liveOperator, parseInt(secondVal));
+        firstVal = operate(firstVal, liveOperator, secondVal);
         ticker = 1;
         secondVal = '';
         DISPLAY_SCREEN.innerText = firstVal;
@@ -97,7 +99,7 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
         return;
         }
         else {
-          firstVal = operate(parseInt(firstVal), liveOperator, parseInt(tempSecondVal));
+          firstVal = operate(firstVal, liveOperator, tempSecondVal);
           CALC_SCREEN.innerText = firstVal + liveOperator + tempSecondVal;
           DISPLAY_SCREEN.innerText = firstVal;
           ticker = 1;
@@ -107,37 +109,6 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
       }
     } console.log(ticker);
 }))
-
-
-
-/* NUM_BTNS.forEach(btn => btn.addEventListener('click', e => {
-    displayValue += e.target.value;
-    DISPLAY_SCREEN.innerHTML = displayValue;
-}))
-
-OPERATOR_BTNS.forEach(btn => btn.addEventListener('click', e => {
-    operator = e.target.value;
-    if (operator !== '=') {
-        storedNum = parseInt(displayValue);
-        liveOperator = operator;
-        displayValue = '';
-        CALC_SCREEN.innerHTML = storedNum + ' ' + operator;
-    }
-    if (operator === '=') {
-        displayValue = operate(storedNum, liveOperator, parseInt(displayValue));
-        DISPLAY_SCREEN.innerHTML = displayValue;
-
-    }
-    console.log(storedNum);
-    console.log(liveOperator);
-
-}))
-
-*/
-
-
-
-
 
 
 const add = function(numOne, numTwo) {
@@ -181,8 +152,11 @@ const factorial = function(num) {
 }
 
 function operate(numOne, operator, numTwo) {
-   if (operator === '+') return add(numOne, numTwo);
-   if (operator === '-') return subtract(numOne, numTwo);
-   if (operator === '/') return divide(numOne, numTwo);
-   if ((operator === '*') || (operator === 'x')) return multiply([numOne, numTwo]);
+   let firstNum = parseFloat(numOne);
+   let secondNum = parseFloat(numTwo);
+
+   if (operator === '+') return add(firstNum, secondNum);
+   if (operator === '-') return subtract(firstNum, secondNum);
+   if (operator === '/') return divide(firstNum, secondNum);
+   if ((operator === '*') || (operator === 'x')) return multiply([firstNum, secondNum]);
 }
