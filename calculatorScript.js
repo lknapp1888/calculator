@@ -10,6 +10,7 @@ let liveOperator = '';
 let firstVal = '';
 let secondVal = '';
 let startingVal = '';
+let tempSecondVal = '';
 let ticker = 1;
 
 BTNS.forEach(btn => btn.addEventListener('click', e => {
@@ -30,20 +31,20 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
           return;
         }
         if (!Number.isInteger(firstVal)) {
-          liveOperator = e.target.value;
-          firstVal = startingVal;
-          startingVal = '';
-          ticker = 2;
-          CALC_SCREEN.innerText = firstVal + liveOperator;
-          return;
+          if (startingVal !== '') {
+            liveOperator = e.target.value;
+            firstVal = startingVal;
+            startingVal = '';
+            ticker = 2;
+            CALC_SCREEN.innerText = firstVal + liveOperator;
+            return;
+          }
+          else return;
+
         }
       }
-      if (e.target.value === '=') {
-        firstVal = operate(parseInt(firstVal), liveOperator, parseInt(secondVal));
-        return;
-      }
     }
-
+////////////////STATE 2 BELOW///////////////////////////////////////////////////////
     if (ticker === 2) {
       if ((e.target.value >= 0) && (e.target.value <=9)) {
         secondVal += e.target.value;
@@ -53,25 +54,55 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
       }
       if ((e.target.value === '+') || (e.target.value === '-') || 
       (e.target.value === 'x') || (e.target.value === '/')) {
-        if (parseInt(secondVal) !== NaN) {
-          firstVal = operate(parseInt(firstVal), liveOperator, parseInt(secondVal));
+        if (secondVal === '') {
+          if (liveOperator === e.target.value) {
           liveOperator = e.target.value;
           CALC_SCREEN.innerText = firstVal + liveOperator;
-          DISPLAY_SCREEN.innerText = firstVal;
-          secondVal = '';
           return;
+          }
+          else {
+            liveOperator = e.target.value;
+            CALC_SCREEN.innerText = firstVal + liveOperator;
+            DISPLAY_SCREEN.innerText = firstVal;
+            return;
+          }
+
+        }
+        if (parseInt(secondVal) !== NaN) {
+          if (liveOperator !== e.target.value) {
+            liveOperator = e.target.value;
+            CALC_SCREEN.innerText = firstVal + liveOperator;
+            DISPLAY_SCREEN.innerText = firstVal;
+            secondVal = '';
+            return;
+          }
+          else {
+          liveOperator = e.target.value;
+          CALC_SCREEN.innerText = firstVal + liveOperator + secondVal;
+          DISPLAY_SCREEN.innerText = firstVal;
+          return;
+          }
         }
         if (parseInt(secondVal) === NaN) {
           return;
         }
       }
       if (e.target.value === '=') {
+        if (secondVal !== '') {
         firstVal = operate(parseInt(firstVal), liveOperator, parseInt(secondVal));
         ticker = 1;
         secondVal = '';
         DISPLAY_SCREEN.innerText = firstVal;
         CALC_SCREEN.innerText = firstVal;
         return;
+        }
+        else {
+          firstVal = operate(parseInt(firstVal), liveOperator, parseInt(tempSecondVal));
+          CALC_SCREEN.innerText = firstVal + liveOperator + tempSecondVal;
+          DISPLAY_SCREEN.innerText = firstVal;
+          ticker = 1;
+          return;
+        }
 
       }
     } console.log(ticker);
