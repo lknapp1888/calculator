@@ -14,8 +14,37 @@ let tempSecondVal = '';
 let ticker = 1;
 
 BTNS.forEach(btn => btn.addEventListener('click', e => {
+    if (e.target.value === 'clear') {
+      liveOperator = '';
+      liveOperator = '';
+      firstVal = '';
+      secondVal = '';
+      startingVal = '';
+      tempSecondVal = '';
+      ticker = 1;
+      CALC_SCREEN.innerText = '';
+      DISPLAY_SCREEN.innerText = '';
+      return;
+    }
+  
     if (ticker === 1) {
-      if ((e.target.value >= 0) && (e.target.value <=9)) {
+      if (e.target.value === 'delete') {
+        if (typeof firstVal === 'number') {
+          if ((firstVal >= 10) || (firstVal <= -10)) {
+          firstVal = firstVal.toString();
+          firstVal = firstVal.slice(0, firstVal.length - 1);
+          firstVal = parseFloat(firstVal);
+          CALC_SCREEN.innerText = firstVal
+          return;
+          }
+          else {
+            firstVal = 0;
+                      CALC_SCREEN.innerText = firstVal
+          return;
+          }
+        }
+      }
+      if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.')) {
         firstVal = '';
         secondVal = '';
         startingVal += e.target.value;
@@ -45,7 +74,7 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
     }
 ////////////////STATE 2 BELOW///////////////////////////////////////////////////////
     if (ticker === 2) {
-      if ((e.target.value >= 0) && (e.target.value <=9)) {
+      if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.'))  {
         secondVal += e.target.value;
         DISPLAY_SCREEN.innerText = firstVal;
         CALC_SCREEN.innerText = firstVal + liveOperator + secondVal;
@@ -65,25 +94,19 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
             DISPLAY_SCREEN.innerText = firstVal;
             return;
           }
-
+        
         }
         if (parseInt(secondVal) !== NaN) {
-          if (liveOperator !== e.target.value) {
-            if (typeof secondVal === 'number') {
-              liveOperator = e.target.value;
-              CALC_SCREEN.innerText = firstVal + liveOperator;
-              DISPLAY_SCREEN.innerText = firstVal;
-              secondVal = '';
-              return;
-            }
-            else return;
+          if (typeof secondVal === 'string') {
+            firstVal = operate(firstVal, liveOperator, secondVal);
+            liveOperator = e.target.value;
+            secondVal = '';
+            CALC_SCREEN.innerText = firstVal + liveOperator;
+            DISPLAY_SCREEN.innerText = firstVal;
+            secondVal = '';
+            return;
           }
-          else {
-          liveOperator = e.target.value;
-          CALC_SCREEN.innerText = firstVal + liveOperator + secondVal;
-          DISPLAY_SCREEN.innerText = firstVal;
-          return;
-          }
+          else return;
         }
         if (parseInt(secondVal) === NaN) {
           return;
