@@ -43,6 +43,11 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
           return;
           }
         }
+        else {
+          startingVal = startingVal.slice(0, startingVal.length - 1);
+          DISPLAY_SCREEN.innerText = startingVal;
+          return;
+        }
       }
       if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.')) {
         firstVal = '';
@@ -74,6 +79,23 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
     }
 ////////////////STATE 2 BELOW///////////////////////////////////////////////////////
     if (ticker === 2) {
+      if (e.target.value === 'delete') {
+        if (secondVal.length > 0) {
+        secondVal = secondVal.slice(0, secondVal.length - 1)
+        DISPLAY_SCREEN.innerText = firstVal;
+        CALC_SCREEN.innerText = firstVal + liveOperator + secondVal;
+        return;
+        }
+        if (secondVal === '') {
+          liveOperator = '';
+          DISPLAY_SCREEN.innerText = firstVal;
+          CALC_SCREEN.innerText = firstVal;
+          ticker = 1;
+          firstVal = parseFloat(firstVal);
+          console.log(typeof firstVal)
+          return;
+        }
+      }
       if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.'))  {
         secondVal += e.target.value;
         DISPLAY_SCREEN.innerText = firstVal;
@@ -113,6 +135,10 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
         }
       }
       if (e.target.value === '=') {
+        if (((liveOperator === '+') || (liveOperator === '-') || 
+        (liveOperator === 'x') || (liveOperator === '/')) && (secondVal === '')){
+          return;
+        }
         if (secondVal !== '') {
         firstVal = operate(firstVal, liveOperator, secondVal);
         ticker = 1;
@@ -130,7 +156,8 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
         }
 
       }
-    } console.log(ticker);
+    } 
+    console.log(ticker);
 }))
 
 
