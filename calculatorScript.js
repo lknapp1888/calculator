@@ -72,6 +72,7 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
         }
       }
       if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.')) {
+        if (startingVal.length === 17) return;
         if (e.target.value === '.') {
           if ((startingVal.search(/[.]/)) > -1) return;
         }
@@ -121,6 +122,7 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
         }
       }
       if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.')) {
+        if (secondVal.length === 17) return;
         if (e.target.value === '.') {
           if ((secondVal.search(/[.]/)) > -1) return;
         }
