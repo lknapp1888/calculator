@@ -13,6 +13,28 @@ let startingVal = '';
 let tempSecondVal = '';
 let ticker = 1;
 
+document.addEventListener('keypress', e => {
+  if (e.key === '0') document.getElementById('btn-zero').click();
+  if (e.key === '1') document.getElementById('btn-one').click();
+  if (e.key === '2') document.getElementById('btn-two').click();
+  if (e.key === '3') document.getElementById('btn-three').click();
+  if (e.key === '4') document.getElementById('btn-four').click();
+  if (e.key === '5') document.getElementById('btn-five').click();
+  if (e.key === '6') document.getElementById('btn-six').click();
+  if (e.key === '7') document.getElementById('btn-seven').click();
+  if (e.key === '8') document.getElementById('btn-eight').click();
+  if (e.key === '9') document.getElementById('btn-nine').click();
+  if (e.key === '.') document.getElementById('btn-float').click();
+  if (e.key === '+') document.getElementById('btn-plus').click();
+  if (e.key === '-') document.getElementById('btn-subtract').click();
+  if (e.key === '/') document.getElementById('btn-divide').click();
+  if ((e.key === 'x') || (e.key === '*')) document.getElementById('btn-multiply').click();
+  if ((e.key === '=') || (e.key === 'Enter')) document.getElementById('btn-equals').click();
+  if (e.key === 'Delete') document.getElementById('btn-delete').click();
+  if ((e.key === 'c') || (e.key === 'C')) document.getElementById('btn-clear').click();
+  else console.log(e.key)
+});
+
 BTNS.forEach(btn => btn.addEventListener('click', e => {
     if (e.target.value === 'clear') {
       liveOperator = '';
@@ -50,6 +72,9 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
         }
       }
       if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.')) {
+        if (e.target.value === '.') {
+          if ((startingVal.search(/[.]/)) > -1) return;
+        }
         firstVal = '';
         secondVal = '';
         startingVal += e.target.value;
@@ -92,11 +117,13 @@ BTNS.forEach(btn => btn.addEventListener('click', e => {
           CALC_SCREEN.innerText = firstVal;
           ticker = 1;
           firstVal = parseFloat(firstVal);
-          console.log(typeof firstVal)
           return;
         }
       }
-      if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.'))  {
+      if (((e.target.value >= 0) && (e.target.value <=9)) || (e.target.value === '.')) {
+        if (e.target.value === '.') {
+          if ((secondVal.search(/[.]/)) > -1) return;
+        }
         secondVal += e.target.value;
         DISPLAY_SCREEN.innerText = firstVal;
         CALC_SCREEN.innerText = firstVal + liveOperator + secondVal;
